@@ -16,11 +16,35 @@ const Button = ({text, handleClick}) => {
   )
 }
 
+const All = ({good, neut, bad}) => {
+  return(
+    <p>
+      all {good + neut + bad}
+    </p>
+  )
+}
+
 const Stat = ({text, value}) => {
   return(
   <p>
     {text} {value}
   </p>
+  )
+}
+
+const Average = ({first, second, third}) => {
+  return(
+    <p>
+      average {(first * 1  + third * -1) / (first + second + third)}
+    </p>
+  )
+}
+
+const PositivePerc = ({pos, neut, bad}) => {
+  return(
+    <p>
+      positive {(pos / (pos + neut + bad)) * 100} %
+    </p>
   )
 }
 
@@ -55,6 +79,9 @@ const App = () => {
       <Stat text={"good"} value={good} />
       <Stat text={"neutral"} value={neutral} />
       <Stat text={"bad"} value={bad} />
+      <All good={good} neut={neutral} bad={bad} />
+      <Average first={good} second={neutral} third={bad} />
+      <PositivePerc pos={good} neut={neutral} bad={bad} />
     </div>
   )
 }

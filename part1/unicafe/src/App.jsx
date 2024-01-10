@@ -53,12 +53,12 @@ const Statistics = ({good, neutral, bad}) => {
     return(
       <div>
         <Head title="statistics" />
-        <Stat text={"good"} value={good} />
-        <Stat text={"neutral"} value={neutral} />
-        <Stat text={"bad"} value={bad} />
-        <All good={good} neut={neutral} bad={bad} />
-        <Average first={good} second={neutral} third={bad} />
-        <PositivePerc pos={good} neut={neutral} bad={bad} />
+        <StatisticsLine text={"good"} value={good} />
+        <StatisticsLine text={"neutral"} value={neutral} />
+        <StatisticsLine text={"bad"} value={bad} />
+        <StatisticsLine text={"all"} value={good + neutral + bad} />
+        <StatisticsLine text={"average"} value={(good * 1  + bad * -1) / (good + neutral + bad)} />
+        <StatisticsLine text={"positive"} value={(good / (good + neutral + bad)) * 100} />
       </div>
     )
   else
@@ -70,6 +70,14 @@ const Statistics = ({good, neutral, bad}) => {
         </p>
       </div>    
     )
+}
+
+const StatisticsLine = ({text, value}) => {
+  return(
+    <p>
+      {text} {value}
+    </p>
+  )
 }
 
 const App = () => {

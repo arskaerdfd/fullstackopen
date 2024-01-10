@@ -48,6 +48,21 @@ const PositivePerc = ({pos, neut, bad}) => {
   )
 }
 
+const Statistics = ({good, neutral, bad}) => {
+  return(
+    <div>
+      <Head title="statistics" />
+      <Stat text={"good"} value={good} />
+      <Stat text={"neutral"} value={neutral} />
+      <Stat text={"bad"} value={bad} />
+      <All good={good} neut={neutral} bad={bad} />
+      <Average first={good} second={neutral} third={bad} />
+      <PositivePerc pos={good} neut={neutral} bad={bad} />
+    </div>
+
+  )
+}
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
@@ -75,13 +90,7 @@ const App = () => {
       <Button handleClick={() => incrementGood()} text={"good"} />
       <Button handleClick={() => incrementNeutral()} text={"neutral"} />
       <Button handleClick={() => incrementBad()} text={"bad"} />
-      <Head title="statistics" />
-      <Stat text={"good"} value={good} />
-      <Stat text={"neutral"} value={neutral} />
-      <Stat text={"bad"} value={bad} />
-      <All good={good} neut={neutral} bad={bad} />
-      <Average first={good} second={neutral} third={bad} />
-      <PositivePerc pos={good} neut={neutral} bad={bad} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }

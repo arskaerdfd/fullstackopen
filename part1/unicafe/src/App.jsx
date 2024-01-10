@@ -49,18 +49,27 @@ const PositivePerc = ({pos, neut, bad}) => {
 }
 
 const Statistics = ({good, neutral, bad}) => {
-  return(
-    <div>
-      <Head title="statistics" />
-      <Stat text={"good"} value={good} />
-      <Stat text={"neutral"} value={neutral} />
-      <Stat text={"bad"} value={bad} />
-      <All good={good} neut={neutral} bad={bad} />
-      <Average first={good} second={neutral} third={bad} />
-      <PositivePerc pos={good} neut={neutral} bad={bad} />
-    </div>
-
-  )
+  if (good + neutral + bad != 0)
+    return(
+      <div>
+        <Head title="statistics" />
+        <Stat text={"good"} value={good} />
+        <Stat text={"neutral"} value={neutral} />
+        <Stat text={"bad"} value={bad} />
+        <All good={good} neut={neutral} bad={bad} />
+        <Average first={good} second={neutral} third={bad} />
+        <PositivePerc pos={good} neut={neutral} bad={bad} />
+      </div>
+    )
+  else
+    return(
+      <div>
+        <Head title="statistics" />
+        <p>
+          No feedback given
+        </p>
+      </div>    
+    )
 }
 
 const App = () => {

@@ -12,16 +12,20 @@ const App = () => {
 
   const AddName = (event) => {
     event.preventDefault()
-    const personObj = {name: newName}
-    console.log('Add name clicked')
-    setPersons(persons.concat(personObj))
-    setNewName('')
+    if (persons.some(person => person.name === newName)){
+      alert(`${newName} is already added to phonebook`)
+    } else {
+      const personObj = {name: newName}
+      console.log('Add name clicked')
+      setPersons(persons.concat(personObj))
+      setNewName('')
+    } 
   }
-
+  
   const Numbers = ({persons}) => {
     return(
       persons.map((person, i) =>
-        <p key={i}> {person.name}</p>  
+        <p key={person.name}> {person.name}</p>  
       )
     )
   }

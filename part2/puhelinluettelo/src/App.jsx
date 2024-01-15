@@ -22,8 +22,9 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
 
       personService
         .create(personObj)
-        .then(response => {
-          setPersons(persons.concat(personObj))
+        .then(addedPerson => {
+          console.log(addedPerson)
+          setPersons(persons.concat(addedPerson.data))
           setNewName('')
           setNewNumber('')
         })
@@ -52,11 +53,16 @@ const Filter = ({filter, setNewFilter}) => {
   )
 }
 
-const Phonebook = ({persons, filter}) => {
+const Phonebook = ({persons, setPersons, filter}) => {
+
   if (!filter) {
     return(
       persons.map(person =>
-        <p key={person.name}> {person.name} {person.number}</p>  
+        <Person 
+          key={person.id} 
+          person={person} 
+          persons={persons} 
+          setPersons={setPersons} />
       )
     )
   } else {
@@ -64,12 +70,37 @@ const Phonebook = ({persons, filter}) => {
       persons.filter(person => 
         person.name.toLowerCase().includes(filter.toLowerCase())
         ).map(person =>
-            <p key={person.name}> {person.name} {person.number}</p>  
+          <Person 
+            key={person.id} 
+            person={person} 
+            persons={persons} 
+            setPersons={setPersons} />
           )
     )
   } 
 }
 
+const Person = ({ person, persons, setPersons }) => {
+  
+  const deleteNumber = () => {
+    console.log(person)
+    if (window.confirm(`Delete ${person.name}`)) {
+      personService
+      .deleteObj(person.id)
+      .then(response =>
+        setPersons(persons.filter(p => p.id !== person.id)))
+    }
+  }
+
+  return (
+    <div>
+      <p>
+        {person.name} {person.number}
+        <button onClick={deleteNumber}>delete</button>
+      </p>
+    </div>
+  )
+}
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
@@ -103,7 +134,7 @@ const App = () => {
         setNewNumber={setNewNumber}
       />
       <h3>Numbers</h3>
-      <Phonebook persons={persons} filter={filter} />
+      <Phonebook persons={persons} setPersons={setPersons} filter={filter} />
     </div>
     
   )

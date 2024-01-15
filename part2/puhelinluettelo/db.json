@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Ada Lovelace",
-      "number": "044-1111111",
+      "number": "12",
       "id": "2"
     },
     {
@@ -19,11 +19,6 @@
       "name": "testiMake",
       "number": "666",
       "id": "4639"
-    },
-    {
-      "id": "9642",
-      "name": "ggg",
-      "number": "67"
     }
   ]
 }

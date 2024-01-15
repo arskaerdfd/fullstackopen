@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import personService from './services/persons'
 
 
 const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNewNumber }) => {
@@ -20,8 +20,8 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
       const personObj = {name: newName, number: newNumber}
       console.log('Add name clicked', personObj)
 
-      axios
-        .post('http://localhost:3001/persons', personObj)
+      personService
+        .create(personObj)
         .then(response => {
           setPersons(persons.concat(personObj))
           setNewName('')
@@ -77,8 +77,8 @@ const App = () => {
   const [filter, setNewFilter] = useState('')
 
   useEffect( () => {
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response =>{
         console.log('promise done', response)
         setPersons(response.data)

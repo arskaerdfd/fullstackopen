@@ -19,9 +19,14 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
     } else {
       const personObj = {name: newName, number: newNumber}
       console.log('Add name clicked', personObj)
-      setPersons(persons.concat(personObj))
-      setNewName('')
-      setNewNumber('')
+
+      axios
+        .post('http://localhost:3001/persons', personObj)
+        .then(response => {
+          setPersons(persons.concat(personObj))
+          setNewName('')
+          setNewNumber('')
+        })
     } 
   }
 
@@ -72,8 +77,6 @@ const App = () => {
   const [filter, setNewFilter] = useState('')
 
   useEffect( () => {
-    console.log('effect')
-
     axios
       .get('http://localhost:3001/persons')
       .then(response =>{

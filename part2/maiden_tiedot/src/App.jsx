@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import countryService from './services/countries'
+import weatherService from './services/weather'
+import weather from './services/weather'
 
 const Filter = ({filter, setFilter}) => {
 
@@ -15,12 +17,12 @@ const Filter = ({filter, setFilter}) => {
   )
 }
 
-const Content = ({filter, countries, setFilter}) => {
+const Content = ({filter, countries, setFilter, weather, setWeather}) => {
   if (filter) {
     const filtered = countries.filter(country => country.name.common.toLowerCase().includes(filter.toLowerCase()))
     if (filtered.length === 1) {
       return(
-      <Country country={filtered[0]} />
+      <Country country={filtered[0]} weather={weather} />
       )
     } else if (filtered.length <= 10) {
       return(
@@ -40,6 +42,21 @@ const Content = ({filter, countries, setFilter}) => {
   }
 }
 const Country = ({country}) => {
+
+  const [weather, setWeather] = useState(null)
+  const [icon, setIcon] = useState(null)
+
+  useEffect( () => {
+    weatherService
+      .getWeather(country.capital)
+        .then(response => {
+          console.log('response', response)
+          setWeather(response)
+          const iconID = response.weather[0].icon
+          setIcon(iconID)
+        })
+  }, [country.capital])
+
   return(
     <div>
       <h1>{country.name.common}</h1>
@@ -51,6 +68,7 @@ const Country = ({country}) => {
       <h2>languages:</h2>
       <Languages languages={country.languages} />
       <img src={`${country.flags.png}`}></img>
+      <Weather country={country} weather={weather} setWeather={setWeather} icon={icon} />
 
     </div>
   )
@@ -68,6 +86,32 @@ const Languages = ({languages}) => {
   )
 }
 
+const Weather = ({country, weather, icon}) => {
+  if (!weather) {
+    return(
+    <div>
+      <p>Loading weather...</p>
+    </div>
+    )
+  } else {
+    return(
+      <div>
+        <h2>
+          Weather in {country.capital}
+        </h2>
+        <p>
+          temperature {(weather.main.temp - 272.15).toFixed(1)} celcius
+        </p>
+        <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`}></img>
+        <p>
+          wind {weather.wind.speed} m/s
+        </p>
+      </div>
+    )
+  }
+  
+}
+
 
 const App = () => {
   const [countries, setCountries] = useState(null)
@@ -79,7 +123,6 @@ const App = () => {
       .then(response =>{
         setCountries(response.data)
       })
-    
   }, [])
 
   return (

@@ -36,7 +36,7 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
         personService
           .create(personObj)
           .then(addedPerson => {
-            console.log(addedPerson)
+            console.log('added person', addedPerson)
             setPersons(persons.concat(addedPerson.data))
             setNewName('')
             setNewNumber('')
@@ -44,7 +44,7 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
             setTimeout(() => setPositiveMessage(null), 5000)
           })
           .catch(error => {
-            setNegativeMessage(`Failed adding ${personObj.name}`)
+            setNegativeMessage(error.response.data.error)
             setTimeout(() => setNegativeMessage(null), 5000)
           })
       } 

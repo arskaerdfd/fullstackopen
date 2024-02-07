@@ -1,3 +1,4 @@
+// eslint-disable-next-line react/prop-types
 const PositiveNotification = ({ message }) => {
     if (message === null) {
       return null

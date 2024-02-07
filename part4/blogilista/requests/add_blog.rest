@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title" : "Arto Hellas",
+  "author" : "111",
+  "url" : "yle.fi",
+  "likes" : 12
+}

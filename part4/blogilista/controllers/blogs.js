@@ -4,6 +4,7 @@ const blogsRouter = require('express').Router()
 
 
 blogsRouter.get('/', (request, response) => {
+  
   Blog
     .find({})
     .then(blogs => {
@@ -14,6 +15,10 @@ blogsRouter.get('/', (request, response) => {
 blogsRouter.post('/', (request, response) => {
   const blog = new Blog(request.body)
 
+  if (!blog.likes) {
+    blog.likes = 0
+  }
+  
   blog
     .save()
     .then(result => {

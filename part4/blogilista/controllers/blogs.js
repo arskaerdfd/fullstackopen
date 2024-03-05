@@ -18,6 +18,10 @@ blogsRouter.post('/', (request, response) => {
   if (!blog.likes) {
     blog.likes = 0
   }
+
+  if (!blog.url || !blog.title) {
+    return response.status(400).json({error: "Title or url missing"})
+  }
   
   blog
     .save()

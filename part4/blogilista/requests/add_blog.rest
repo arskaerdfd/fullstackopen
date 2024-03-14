@@ -1,5 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikh1dXRpbmVuIiwiaWQiOiI2NWYxOWFiYTcyODQ3ODU0YWY0ODkyYzIiLCJpYXQiOjE3MTA0MzgwMjZ9.L3R7mjJuTid8UIZJ_QvBTL0Zs1s4TAOtFpB7sNJLG-o
 
 {
   "title" : "Arto Hellas",

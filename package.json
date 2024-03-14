@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.5"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "supertest": "^6.3.4"
   }
 }

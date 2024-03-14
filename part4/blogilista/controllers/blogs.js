@@ -10,7 +10,6 @@ const jwt = require('jsonwebtoken')
 blogsRouter.get('/', async (request, response) => {
   
   const blogs = await Blog.find({}).populate('user', {username: 1, name: 1, id: 1})
-  console.log('blog', blogs)
   
   response.json(blogs)
 })
@@ -32,7 +31,7 @@ blogsRouter.post('/', async (request, response) => {
   const body = request.body
 
   const decodedToken = jwt.verify(request.token , process.env.SECRET)
-  
+
   if (!decodedToken.id) {
     return response.status(401).json({error: "Token invalid"})
   }
@@ -65,9 +64,23 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
+
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+  if (!decodedToken.id) {
+    return response.status(401).json({error: "Token invalid"})
+  }
+
   try {
-    await Blog.findByIdAndDelete(request.params.id)
-    response.status(204).end()
+    const blogToDelete = await Blog.findById(request.params.id)
+
+    if ( blogToDelete.user.toString() === decodedToken.id.toString() ) {
+      await Blog.findByIdAndDelete(request.params.id)
+      response.status(204).end()
+    } else {
+      response.status(401).json({ error: "Token doesn't match the user of the blog"})
+    }
+
   } catch {
     response.status(404).end()
   }

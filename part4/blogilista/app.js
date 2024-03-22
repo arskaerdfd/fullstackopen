@@ -18,8 +18,8 @@ app.use(middleware.tokenExtractor)
 app.use(middleware.errorHandler)
 
 
-app.use('/api/blogs', notesRouter)
+
+app.use("/api/blogs", notesRouter);
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
-
 module.exports = app

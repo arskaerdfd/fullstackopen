@@ -13,9 +13,6 @@ const App = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [user, setUser] = useState("")
-  const [title, setTitle] = useState("")
-  const [author, setAuthor] = useState("")
-  const [url, setUrl] = useState("")
   const [posMessage, setPosMessage] = useState(null)
   const [error, setError] = useState(null)
 
@@ -51,16 +48,12 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
   }
 
-  const handleCreation = async (event) => {
-    event.preventDefault()
+  const handleCreation = async (blogObject) => {
+    console.log('handleCreation', blogObject)
+    
     try {
-      const request = await blogService.create({
-        title, author, url,
-      })
-      setPosMessage(`A new blog, ${title} by ${author}, added`)
-      setAuthor("")
-      setTitle("")
-      setUrl("")
+      const request = await blogService.create(blogObject)
+      setPosMessage(`A new blog, ${blogObject.title} by ${blogObject.author}, added`)
       setTimeout( () => {
         setPosMessage(null)
       }, 5000)
@@ -116,12 +109,6 @@ const App = () => {
     <NegativeNotification message={error} />
     <Togglable buttonLabel="new blog">
       <CreateForm
-      title={title}
-      setTitle={setTitle}
-      author={author}
-      setAuthor={setAuthor}
-      url={url}
-      setUrl={setUrl}
       handleCreation={handleCreation}
       />
     </Togglable>

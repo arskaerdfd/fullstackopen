@@ -6,6 +6,7 @@ import loginService from './services/login'
 import CreateForm from './components/CreateForm'
 import PositiveNotification from './components/PositiveNotification'
 import NegativeNotification from './components/NegativeNotification'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -35,6 +36,7 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+
     } catch (exception) {
       console.log("ex", exception)
       setError('wrong credentials')
@@ -89,18 +91,22 @@ const App = () => {
     }
   }, [])
 
-  const loginForm = () => (
-    <div>
-      <NegativeNotification message={error} />
-      <LoginForm username={username}
-        setUsername={setUsername} 
-        password={password} 
-        setPassword={setPassword}
-        handleLogin={handleLogin}
-      />
-    </div>
-    
-  )
+  const loginForm = () => {
+
+
+
+    return(
+      <div>
+        <NegativeNotification message={error} />
+        <LoginForm username={username}
+          setUsername={setUsername} 
+          password={password} 
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+        />
+      </div>
+      
+  )}
 
   const blog = () => (
     <div>
@@ -108,15 +114,18 @@ const App = () => {
     <p>{user.name} logged in <button onClick={handleLogout}>logout</button> </p>
     <PositiveNotification message={posMessage} />
     <NegativeNotification message={error} />
-    <CreateForm
-    title={title}
-    setTitle={setTitle}
-    author={author}
-    setAuthor={setAuthor}
-    url={url}
-    setUrl={setUrl}
-    handleCreation={handleCreation}
-    />
+    <Togglable buttonLabel="new blog">
+      <CreateForm
+      title={title}
+      setTitle={setTitle}
+      author={author}
+      setAuthor={setAuthor}
+      url={url}
+      setUrl={setUrl}
+      handleCreation={handleCreation}
+      />
+    </Togglable>
+    
     <Blog blogs={blogs} />
     </div>
   )

@@ -80,6 +80,20 @@ const App = () => {
     }
   }
 
+  const handleDelete = async (deletedBlog) => {
+    try {
+      await blogService.deleteBlog(deletedBlog)
+      setBlogs(blogs.filter(blog => blog.id !== deletedBlog.id))
+    } catch (exception) {
+      console.log('ex', exception)
+      setError(exception.message)
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
+    }
+  }
+
+
   useEffect(() => {
     blogService.getAll().then((blogs) =>
       setBlogs(blogs.slice().sort((a, b) => b.likes - a.likes))
@@ -126,7 +140,13 @@ const App = () => {
       </Togglable>
       <br></br>
       {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} handleLike={handleLike} />
+        <Blog 
+        key={blog.id} 
+        blog={blog} 
+        handleLike={handleLike} 
+        user={user} 
+        handleDelete={handleDelete} 
+        />
       ))}
     </div>
   )

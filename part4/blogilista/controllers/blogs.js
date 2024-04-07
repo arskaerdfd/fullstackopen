@@ -57,12 +57,14 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   response.status(201).json(result)
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', middleware.userExtractor,  async (request, response) => {
 
   const user = request.user
 
   try {
     const blogToDelete = await Blog.findById(request.params.id)
+    console.log("user", user)
+    
 
     if ( blogToDelete.user._id.toString() === user._id.toString() ) {
       await Blog.findByIdAndDelete(request.params.id)
@@ -71,7 +73,9 @@ blogsRouter.delete('/:id', async (request, response) => {
       response.status(401).json({ error: "Token doesn't match the user of the blog"})
     }
 
-  } catch {
+  } catch(ex) {
+    console.log('ex', ex)
+    
     response.status(404).end()
   }
 })

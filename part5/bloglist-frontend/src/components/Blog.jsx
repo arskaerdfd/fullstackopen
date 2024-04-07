@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const Blog = ({ blog, handleLike, user, handleDelete }) => {
 
@@ -19,7 +19,7 @@ const Blog = ({ blog, handleLike, user, handleDelete }) => {
     const updatedBlog = blog
     updatedBlog.likes += 1
     handleLike(updatedBlog)
-    console.log('updateLike', updatedBlog)  
+    console.log('updateLike', updatedBlog)
   }
 
   const deleteBlog = () => {
@@ -29,23 +29,23 @@ const Blog = ({ blog, handleLike, user, handleDelete }) => {
   if (!showInfo) {
     return (
       <div>
-          {blog.title} {blog.author}
-          <button onClick={toggleInfo}> view </button>
+        {blog.title} {blog.author}
+        <button onClick={toggleInfo}> view </button>
       </div>
     )} else {
-      return(
-        <div style={blogStyle}>
-          <div>{blog.title}<button onClick={toggleInfo}> hide </button></div>
-          <div>{blog.url}</div>
-          <div>{blog.likes} <button onClick={updateLike}> like </button></div>
-          <div>{blog.author}</div>
-          {user && user.username === blog.user.username && 
+    return(
+      <div style={blogStyle}>
+        <div>{blog.title}<button onClick={toggleInfo}> hide </button></div>
+        <div>{blog.url}</div>
+        <div>{blog.likes} <button onClick={updateLike}> like </button></div>
+        <div>{blog.author}</div>
+        {user && user.username === blog.user.username &&
           <button onClick={deleteBlog}>delete</button>}
-          
-        </div>
-      )
-    }
+
+      </div>
+    )
+  }
 }
-    
+
 
 export default Blog

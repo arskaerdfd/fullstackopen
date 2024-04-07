@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-const CreateForm = ({handleCreation}) => {
+const CreateForm = ({ handleCreation }) => {
 
-  const [title, setTitle] = useState("")
-  const [author, setAuthor] = useState("")
-  const [url, setUrl] = useState("")
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   const addBlog = async (event) => {
     event.preventDefault()
@@ -15,11 +15,11 @@ const CreateForm = ({handleCreation}) => {
     }
     handleCreation(newBlog)
     console.log('new blog createForm', newBlog)
-    
 
-    setTitle("")
-    setAuthor("")
-    setUrl("")
+
+    setTitle('')
+    setAuthor('')
+    setUrl('')
   }
 
   return(
@@ -27,25 +27,25 @@ const CreateForm = ({handleCreation}) => {
       <div>
         title
         <input type="text"
-        value={title}
-        name="title"
-        onChange={({target}) => setTitle(target.value)}
+          value={title}
+          name="title"
+          onChange={({ target }) => setTitle(target.value)}
         />
       </div>
       <div>
       author
         <input type="text"
-        value={author}
-        name="author"
-        onChange={({target}) => setAuthor(target.value)}
+          value={author}
+          name="author"
+          onChange={({ target }) => setAuthor(target.value)}
         />
       </div>
       <div>
       url
         <input type="text"
-        value={url}
-        name="url"
-        onChange={({target}) => setUrl(target.value)}
+          value={url}
+          name="url"
+          onChange={({ target }) => setUrl(target.value)}
         />
       </div>
       <button type="submit">create</button>

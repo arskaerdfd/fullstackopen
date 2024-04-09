@@ -66,5 +66,15 @@ describe('Blog app', () => {
       await expect(page.getByText('1')).toBeVisible()
       
     })
+
+    test.only('user that added the blog can remove it', async ({page}) => {
+      await page.getByRole('button', { name: 'view' }).click()
+      page.on('dialog', dialog => dialog.accept())
+      await page.getByRole('button', { name: 'delete' }).click()
+
+      await expect(page.getByText('Testaus Testaaja huutis')).not.toBeVisible()
+      await expect(page.getByText('google.com')).not.toBeVisible()
+
+    })
   })
 })

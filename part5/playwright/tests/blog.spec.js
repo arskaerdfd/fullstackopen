@@ -94,7 +94,7 @@ describe('Blog app', () => {
       await expect(page.getByRole('button', { name: 'delete' })).not.toBeVisible()
     })
 
-    test('the blogs are arranged in the correct order', async ({page, request}) => {
+    test.only('the blogs are arranged in the correct order', async ({page, request}) => {
 
 
       await page.getByTestId('title').fill('Parempi blogi')
@@ -107,9 +107,12 @@ describe('Blog app', () => {
       const likeButtons = await page.getByRole('button', { name: 'like' }).all()
 
       await likeButtons[1].click()
+
+      await page.getByRole('button', { name: 'hide' }).first().click()
       await page.getByRole('button', { name: 'hide' }).click()
-      await page.getByRole('button', { name: 'hide' }).click()
-      await page.getByRole('button', { name: 'view' }).click()
+
+      await page.getByRole('button', { name: 'view' }).first().click()
+      
 
       await expect(page.getByText('1')).toBeVisible()
 

@@ -67,7 +67,7 @@ describe('Blog app', () => {
       
     })
 
-    test.only('user that added the blog can remove it', async ({page}) => {
+    test('user that added the blog can remove it', async ({page}) => {
       await page.getByRole('button', { name: 'view' }).click()
       page.on('dialog', dialog => dialog.accept())
       await page.getByRole('button', { name: 'delete' }).click()
@@ -75,6 +75,47 @@ describe('Blog app', () => {
       await expect(page.getByText('Testaus Testaaja huutis')).not.toBeVisible()
       await expect(page.getByText('google.com')).not.toBeVisible()
 
+    })
+
+    test('only the user that has added the blog can see the delete button', async ({ page, request }) => {
+      await request.post('http://localhost:3003/api/users', {
+        data: {
+          name: 'Testi Make',
+          username: 'huutis2',
+          password: 'HuutisUkko'
+        }
+      })
+    
+      await page.getByRole('button', { name: 'logout' }).click()
+      await page.getByTestId('username').fill('huutis2')
+      await page.getByTestId('password').fill('HuutisUkko')
+      await page.getByRole('button', { name: 'login' }).click()
+      await page.getByRole('button', { name: 'view' }).click()
+      await expect(page.getByRole('button', { name: 'delete' })).not.toBeVisible()
+    })
+
+    test('the blogs are arranged in the correct order', async ({page, request}) => {
+
+
+      await page.getByTestId('title').fill('Parempi blogi')
+      await page.getByTestId('author').fill('Meitsi')
+      await page.getByTestId('url').fill('aalto.fi')
+      await page.getByRole('button', { name: 'create' }).click()
+
+      await page.getByRole('button', { name: 'view' }).click()
+      await page.getByRole('button', { name: 'view' }).click()
+      const likeButtons = await page.getByRole('button', { name: 'like' }).all()
+
+      await likeButtons[1].click()
+      await page.getByRole('button', { name: 'hide' }).click()
+      await page.getByRole('button', { name: 'hide' }).click()
+      await page.getByRole('button', { name: 'view' }).click()
+
+      await expect(page.getByText('1')).toBeVisible()
+
+      
+      
+      
     })
   })
 })

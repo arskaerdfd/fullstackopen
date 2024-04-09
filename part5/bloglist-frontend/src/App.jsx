@@ -47,6 +47,7 @@ const App = () => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
+    setUser('')
   }
 
   const handleCreation = async (blogObject) => {
@@ -99,7 +100,7 @@ const App = () => {
     blogService.getAll().then((blogs) =>
       setBlogs(blogs.slice().sort((a, b) => b.likes - a.likes))
     )
-  }, [blogs])
+  }, [blogs, user])
 
 
   useEffect(() => {

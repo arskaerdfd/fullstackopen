@@ -52,6 +52,7 @@ const App = () => {
   const handleCreation = async (blogObject) => {
     try {
       const request = await blogService.create(blogObject)
+      setBlogs([...blogs, request])
       setPosMessage(`A new blog, ${blogObject.title} by ${blogObject.author}, added`)
       setTimeout( () => {
         setPosMessage(null)
@@ -98,7 +99,7 @@ const App = () => {
     blogService.getAll().then((blogs) =>
       setBlogs(blogs.slice().sort((a, b) => b.likes - a.likes))
     )
-  }, [])
+  }, [blogs])
 
 
   useEffect(() => {

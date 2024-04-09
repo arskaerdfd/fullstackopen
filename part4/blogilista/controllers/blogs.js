@@ -1,6 +1,7 @@
 const Blog = require("../models/blog")
 const blogsRouter = require('express').Router()
 const middleware = require('../utils/middleware')
+const User = require('../models/user')
 
 
 
@@ -29,8 +30,6 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   const body = request.body
 
   const user = request.user
-  
-  console.log('user', user)
   
 
   const blog = new Blog({
@@ -63,7 +62,6 @@ blogsRouter.delete('/:id', middleware.userExtractor,  async (request, response) 
 
   try {
     const blogToDelete = await Blog.findById(request.params.id)
-    console.log("user", user)
     
 
     if ( blogToDelete.user._id.toString() === user._id.toString() ) {
@@ -99,6 +97,7 @@ blogsRouter.put('/:id', async (request, response) => {
     response.json({error: "Blog not found"})
   }
 })
+
 
 module.exports = blogsRouter
 

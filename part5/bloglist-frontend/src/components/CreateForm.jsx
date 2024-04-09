@@ -27,6 +27,7 @@ const CreateForm = ({ handleCreation }) => {
       <div>
         title
         <input type="text"
+          data-testid='title'
           value={title}
           name="title"
           onChange={({ target }) => setTitle(target.value)}
@@ -36,6 +37,7 @@ const CreateForm = ({ handleCreation }) => {
       <div>
       author
         <input type="text"
+          data-testid='author'
           value={author}
           name="author"
           onChange={({ target }) => setAuthor(target.value)}
@@ -45,6 +47,7 @@ const CreateForm = ({ handleCreation }) => {
       <div>
       url
         <input type="text"
+          data-testid='url'
           value={url}
           name="url"
           onChange={({ target }) => setUrl(target.value)}
